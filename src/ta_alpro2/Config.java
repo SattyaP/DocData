@@ -22,7 +22,7 @@ public class Config {
             String url = "jdbc:mysql://localhost/docdata";
             String user = "root";
             String pass = "";
-            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+            Class.forName("com.mysql.cj.jdbc.Driver");
             mysqlconfig = DriverManager.getConnection(url, user, pass);
             System.out.println("Koneksi Sukses");
         } catch (Exception e) {

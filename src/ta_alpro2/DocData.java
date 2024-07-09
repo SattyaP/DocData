@@ -132,7 +132,7 @@ public class DocData extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         detailPasien = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
+        riwayatPasien = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DocData");
@@ -385,26 +385,31 @@ public class DocData extends javax.swing.JFrame {
 
         baseLayout.add(panelDoctor, "panelDoctor");
 
-        jLabel10.setText("Detail Pasien");
-
         javax.swing.GroupLayout detailPasienLayout = new javax.swing.GroupLayout(detailPasien);
         detailPasien.setLayout(detailPasienLayout);
         detailPasienLayout.setHorizontalGroup(
             detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(detailPasienLayout.createSequentialGroup()
-                .addGap(256, 256, 256)
-                .addComponent(jLabel10)
-                .addContainerGap(707, Short.MAX_VALUE))
+            .addGap(0, 1030, Short.MAX_VALUE)
         );
         detailPasienLayout.setVerticalGroup(
             detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(detailPasienLayout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addComponent(jLabel10)
-                .addContainerGap(476, Short.MAX_VALUE))
+            .addGap(0, 600, Short.MAX_VALUE)
         );
 
         baseLayout.add(detailPasien, "detailPasien");
+
+        javax.swing.GroupLayout riwayatPasienLayout = new javax.swing.GroupLayout(riwayatPasien);
+        riwayatPasien.setLayout(riwayatPasienLayout);
+        riwayatPasienLayout.setHorizontalGroup(
+            riwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1030, Short.MAX_VALUE)
+        );
+        riwayatPasienLayout.setVerticalGroup(
+            riwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 600, Short.MAX_VALUE)
+        );
+
+        baseLayout.add(riwayatPasien, "card6");
 
         getContentPane().add(baseLayout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 600));
 
@@ -493,7 +498,6 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -511,5 +515,6 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JPanel panelDoctor;
     private javax.swing.JPanel panelStaff;
     private javax.swing.JPasswordField password;
+    private javax.swing.JPanel riwayatPasien;
     // End of variables declaration//GEN-END:variables
 }
