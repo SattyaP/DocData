@@ -735,6 +735,7 @@ public class DocData extends javax.swing.JFrame {
         p_number.setText("");
         p_address.setText("");
         p_email.setText("");
+        JOptionPane.showMessageDialog(this, "Data Berhasil di Reset");
     }//GEN-LAST:event_btn_resetActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
