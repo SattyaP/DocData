@@ -104,6 +104,15 @@ public class DocData extends javax.swing.JFrame {
     private void initComponents() {
 
         baseLayout = new javax.swing.JPanel();
+        panelAuth = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        email = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        password = new javax.swing.JPasswordField();
+        btnLogin = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         panelStaff = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         form_search = new javax.swing.JTextField();
@@ -117,15 +126,6 @@ public class DocData extends javax.swing.JFrame {
         notfound = new javax.swing.JLabel();
         detail_btn = new javax.swing.JButton();
         delete_btn = new javax.swing.JButton();
-        panelAuth = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        email = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        password = new javax.swing.JPasswordField();
-        btnLogin = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
         panelDoctor = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -140,6 +140,92 @@ public class DocData extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         baseLayout.setLayout(new java.awt.CardLayout());
+
+        panelAuth.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel2.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(60, 63, 65));
+        jLabel2.setText("Welcome back");
+
+        jLabel3.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel3.setText("Hopefully recording data will be easier, have a beautiful day");
+
+        email.setText("fahmi@doctor.docdata.id");
+
+        jLabel4.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(60, 63, 65));
+        jLabel4.setText("Email");
+
+        jLabel5.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(60, 63, 65));
+        jLabel5.setText("Password");
+
+        password.setText("123");
+
+        btnLogin.setBackground(new java.awt.Color(51, 51, 255));
+        btnLogin.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel6.setText("Forget Password ?");
+
+        javax.swing.GroupLayout panelAuthLayout = new javax.swing.GroupLayout(panelAuth);
+        panelAuth.setLayout(panelAuthLayout);
+        panelAuthLayout.setHorizontalGroup(
+            panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAuthLayout.createSequentialGroup()
+                .addGap(418, 418, 418)
+                .addComponent(jLabel2)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAuthLayout.createSequentialGroup()
+                .addContainerGap(312, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(304, 304, 304))
+            .addGroup(panelAuthLayout.createSequentialGroup()
+                .addGap(299, 299, 299)
+                .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(email, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(password, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelAuthLayout.createSequentialGroup()
+                            .addComponent(jLabel6)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
+                            .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelAuthLayout.setVerticalGroup(
+            panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAuthLayout.createSequentialGroup()
+                .addGap(74, 74, 74)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addGap(50, 50, 50)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(155, 155, 155))
+        );
+
+        baseLayout.add(panelAuth, "panelAuth");
 
         jLabel8.setText("Search Pasien");
 
@@ -243,92 +329,6 @@ public class DocData extends javax.swing.JFrame {
         );
 
         baseLayout.add(panelStaff, "panelStaff");
-
-        panelAuth.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel2.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(60, 63, 65));
-        jLabel2.setText("Welcome back");
-
-        jLabel3.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel3.setText("Hopefully recording data will be easier, have a beautiful day");
-
-        email.setText("fahmi@doctor.docdata.id");
-
-        jLabel4.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(60, 63, 65));
-        jLabel4.setText("Email");
-
-        jLabel5.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(60, 63, 65));
-        jLabel5.setText("Password");
-
-        password.setText("123");
-
-        btnLogin.setBackground(new java.awt.Color(51, 51, 255));
-        btnLogin.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
-        btnLogin.setText("Login");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
-            }
-        });
-
-        jLabel6.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(51, 51, 255));
-        jLabel6.setText("Forget Password ?");
-
-        javax.swing.GroupLayout panelAuthLayout = new javax.swing.GroupLayout(panelAuth);
-        panelAuth.setLayout(panelAuthLayout);
-        panelAuthLayout.setHorizontalGroup(
-            panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAuthLayout.createSequentialGroup()
-                .addGap(418, 418, 418)
-                .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAuthLayout.createSequentialGroup()
-                .addContainerGap(312, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(304, 304, 304))
-            .addGroup(panelAuthLayout.createSequentialGroup()
-                .addGap(299, 299, 299)
-                .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(email, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(password, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelAuthLayout.createSequentialGroup()
-                            .addComponent(jLabel6)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
-                            .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panelAuthLayout.setVerticalGroup(
-            panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAuthLayout.createSequentialGroup()
-                .addGap(74, 74, 74)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addGap(50, 50, 50)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(155, 155, 155))
-        );
-
-        baseLayout.add(panelAuth, "panelAuth");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 10, 0));
