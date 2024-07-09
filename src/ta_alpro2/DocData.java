@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  *
@@ -22,14 +22,76 @@ public class DocData extends javax.swing.JFrame {
     ResultSet rs;
     String sql;
     PreparedStatement pstmt;
-    
+
     public DocData() {
         initComponents();
+        initDB();
     }
-    
+
     private void handlePanel(String name) {
         CardLayout panel = (CardLayout) baseLayout.getLayout();
         panel.show(baseLayout, name);
+    }
+
+    private void handleRoles(String role) {
+        if (role.equals("Doctor")) {
+            handlePanel("panelDoctor");
+        } else {
+            JLabel[] field = {nama, nik, no, alamat, gender};
+
+            for (JLabel component : field) {
+                if (component.getName() != null) {
+                    component.setVisible(false);
+                    break;
+                }
+            }
+
+            handlePanel("panelStaff");
+        }
+    }
+
+    private void initDB() {
+        try {
+            con = Config.configDB();
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+        }
+
+    }
+
+    private void searchPasien(String query) {
+        try {
+            sql = "SELECT * FROM patients WHERE first_name LIKE ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, "%" + query + "%");
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                System.out.print(rs.getString("first_name"));
+                JLabel[] field = {nama, nik, no, alamat, gender};
+
+                for (JLabel component : field) {
+                    if (component.getName() != null) {
+                        component.setVisible(true);
+                        break;
+                    }
+                }
+                
+                notfound.setVisible(false);
+                detail_btn.setEnabled(true);
+                delete_btn.setEnabled(true);
+                field[0].setText(rs.getString("first_name"));
+                field[1].setText(rs.getString("last_name"));
+                field[2].setText(rs.getString("contact_number"));
+                field[3].setText(rs.getString("address"));
+                field[4].setText(rs.getString("gender"));
+            } else {
+                JOptionPane.showMessageDialog(this, "Pasien tidak ditemukan");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+
     }
 
     /**
@@ -42,9 +104,20 @@ public class DocData extends javax.swing.JFrame {
     private void initComponents() {
 
         baseLayout = new javax.swing.JPanel();
+        panelStaff = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        form_search = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        nama = new javax.swing.JLabel();
+        nik = new javax.swing.JLabel();
+        no = new javax.swing.JLabel();
+        alamat = new javax.swing.JLabel();
+        gender = new javax.swing.JLabel();
+        notfound = new javax.swing.JLabel();
+        detail_btn = new javax.swing.JButton();
+        delete_btn = new javax.swing.JButton();
         panelAuth = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         email = new javax.swing.JTextField();
@@ -53,9 +126,13 @@ public class DocData extends javax.swing.JFrame {
         password = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        panelMain = new javax.swing.JPanel();
-        present = new javax.swing.JLabel();
-        btnLogout = new javax.swing.JButton();
+        panelDoctor = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        detailPasien = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DocData");
@@ -64,30 +141,110 @@ public class DocData extends javax.swing.JFrame {
 
         baseLayout.setLayout(new java.awt.CardLayout());
 
+        jLabel8.setText("Search Pasien");
+
+        jButton2.setText("Cari");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        notfound.setText("Pasien tidak ditemukan");
+
+        detail_btn.setText("Detail");
+        detail_btn.setEnabled(false);
+        detail_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                detail_btnActionPerformed(evt);
+            }
+        });
+
+        delete_btn.setText("Delete");
+        delete_btn.setEnabled(false);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(nama)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(nik)
+                        .addGap(65, 65, 65)
+                        .addComponent(no)
+                        .addGap(50, 50, 50)
+                        .addComponent(alamat)
+                        .addGap(40, 40, 40)
+                        .addComponent(gender))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(notfound)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(detail_btn)
+                .addGap(18, 18, 18)
+                .addComponent(delete_btn)
+                .addGap(22, 22, 22))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(34, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(notfound)
+                        .addGap(0, 0, 0)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nama)
+                            .addComponent(nik)
+                            .addComponent(no)
+                            .addComponent(alamat)
+                            .addComponent(gender))
+                        .addGap(38, 38, 38))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(detail_btn)
+                            .addComponent(delete_btn))
+                        .addGap(32, 32, 32))))
+        );
+
+        javax.swing.GroupLayout panelStaffLayout = new javax.swing.GroupLayout(panelStaff);
+        panelStaff.setLayout(panelStaffLayout);
+        panelStaffLayout.setHorizontalGroup(
+            panelStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelStaffLayout.createSequentialGroup()
+                .addGap(253, 253, 253)
+                .addGroup(panelStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel8)
+                    .addGroup(panelStaffLayout.createSequentialGroup()
+                        .addComponent(form_search, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(141, Short.MAX_VALUE))
+        );
+        panelStaffLayout.setVerticalGroup(
+            panelStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelStaffLayout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addComponent(jLabel8)
+                .addGap(18, 18, 18)
+                .addGroup(panelStaffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(form_search))
+                .addGap(91, 91, 91)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(277, Short.MAX_VALUE))
+        );
+
+        baseLayout.add(panelStaff, "panelStaff");
+
         panelAuth.setBackground(new java.awt.Color(255, 255, 255));
-
-        jPanel1.setBackground(new java.awt.Color(51, 51, 255));
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("LEFT IMAGE SHOULD BE HERE");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(jLabel1)
-                .addContainerGap(62, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(283, 283, 283)
-                .addComponent(jLabel1)
-                .addContainerGap(237, Short.MAX_VALUE))
-        );
 
         jLabel2.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(60, 63, 65));
@@ -97,7 +254,7 @@ public class DocData extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setText("Hopefully recording data will be easier, have a beautiful day");
 
-        email.setText("231111017@mhs.stiki.ac.id");
+        email.setText("fahmi@doctor.docdata.id");
 
         jLabel4.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(60, 63, 65));
@@ -107,7 +264,7 @@ public class DocData extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(60, 63, 65));
         jLabel5.setText("Password");
 
-        password.setText("12345678");
+        password.setText("123");
 
         btnLogin.setBackground(new java.awt.Color(51, 51, 255));
         btnLogin.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
@@ -128,98 +285,126 @@ public class DocData extends javax.swing.JFrame {
         panelAuthLayout.setHorizontalGroup(
             panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAuthLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addGap(418, 418, 418)
+                .addComponent(jLabel2)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAuthLayout.createSequentialGroup()
+                .addContainerGap(312, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(304, 304, 304))
+            .addGroup(panelAuthLayout.createSequentialGroup()
+                .addGap(299, 299, 299)
                 .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAuthLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAuthLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(206, 206, 206))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAuthLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(93, 93, 93))))
-                    .addGroup(panelAuthLayout.createSequentialGroup()
-                        .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(email, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(password, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelAuthLayout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
-                                    .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap())))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(email, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(password, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelAuthLayout.createSequentialGroup()
+                            .addComponent(jLabel6)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
+                            .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelAuthLayout.setVerticalGroup(
             panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAuthLayout.createSequentialGroup()
-                .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelAuthLayout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelAuthLayout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))))
-                .addGap(29, 29, 29))
+                .addGap(74, 74, 74)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addGap(50, 50, 50)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(panelAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(155, 155, 155))
         );
 
         baseLayout.add(panelAuth, "panelAuth");
 
-        present.setFont(new java.awt.Font("Poppins", 1, 36)); // NOI18N
-        present.setText("Halo, ");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 10, 0));
 
-        btnLogout.setBackground(new java.awt.Color(51, 51, 255));
-        btnLogout.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        btnLogout.setForeground(new java.awt.Color(255, 255, 255));
-        btnLogout.setText("Logout");
-        btnLogout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogoutActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1024, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
 
-        javax.swing.GroupLayout panelMainLayout = new javax.swing.GroupLayout(panelMain);
-        panelMain.setLayout(panelMainLayout);
-        panelMainLayout.setHorizontalGroup(
-            panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMainLayout.createSequentialGroup()
-                .addGap(177, 177, 177)
-                .addComponent(present)
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setText("Status :");
+
+        jButton1.setText("READY");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel7.setText("Not Ready yet");
+
+        javax.swing.GroupLayout panelDoctorLayout = new javax.swing.GroupLayout(panelDoctor);
+        panelDoctor.setLayout(panelDoctorLayout);
+        panelDoctorLayout.setHorizontalGroup(
+            panelDoctorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDoctorLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(panelDoctorLayout.createSequentialGroup()
+                .addGap(290, 290, 290)
+                .addGroup(panelDoctorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addGroup(panelDoctorLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMainLayout.createSequentialGroup()
-                .addContainerGap(482, Short.MAX_VALUE)
-                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(397, 397, 397))
         );
-        panelMainLayout.setVerticalGroup(
-            panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMainLayout.createSequentialGroup()
-                .addGap(240, 240, 240)
-                .addComponent(present)
-                .addGap(128, 128, 128)
-                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(133, Short.MAX_VALUE))
+        panelDoctorLayout.setVerticalGroup(
+            panelDoctorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDoctorLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
+                .addGroup(panelDoctorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel7))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(0, 402, Short.MAX_VALUE))
         );
 
-        baseLayout.add(panelMain, "panelMain");
+        baseLayout.add(panelDoctor, "panelDoctor");
+
+        jLabel10.setText("Detail Pasien");
+
+        javax.swing.GroupLayout detailPasienLayout = new javax.swing.GroupLayout(detailPasien);
+        detailPasien.setLayout(detailPasienLayout);
+        detailPasienLayout.setHorizontalGroup(
+            detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(detailPasienLayout.createSequentialGroup()
+                .addGap(256, 256, 256)
+                .addComponent(jLabel10)
+                .addContainerGap(707, Short.MAX_VALUE))
+        );
+        detailPasienLayout.setVerticalGroup(
+            detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(detailPasienLayout.createSequentialGroup()
+                .addGap(108, 108, 108)
+                .addComponent(jLabel10)
+                .addContainerGap(476, Short.MAX_VALUE))
+        );
+
+        baseLayout.add(detailPasien, "detailPasien");
 
         getContentPane().add(baseLayout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 600));
 
@@ -229,38 +414,36 @@ public class DocData extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         try {
-            sql = "SELECT * FROM users WHERE email='" + email.getText() + "' AND password='" + password.getText() + "'";
+            sql = "SELECT email, password, username, role_name FROM users s JOIN roles r ON r.role_id = s.role_id WHERE email = '" + email.getText() + "' AND password='" + password.getText() + "'";
             con = Config.configDB();
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
 
             if (rs.next()) {
                 if (email.getText().equals(rs.getString("email")) && password.getText().equals(rs.getString("password"))) {
-                    handlePanel("panelMain");
+                    UserSession.getInstance(rs.getString("username"), rs.getString("role_name"));
+
+                    UserSession session = UserSession.getInstance();
+                    handleRoles(session.getRole());
                     rs.close();
-
-                    sql = "SELECT username FROM users WHERE email='" + email.getText() + "'";
-                    rs = stmt.executeQuery(sql);
-
-                    if (rs.next()) {
-                        present.setText("Halo, " + rs.getString("username"));
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Error retrieving user details.");
-                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Maaf, kombinasi Username dan Password anda salah");
             }
-            
+
             rs.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        handlePanel("panelAuth");
-    }//GEN-LAST:event_btnLogoutActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        searchPasien(form_search.getText());
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void detail_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detail_btnActionPerformed
+        handlePanel("detailPasien");
+    }//GEN-LAST:event_detail_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -298,20 +481,35 @@ public class DocData extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel alamat;
     private javax.swing.JPanel baseLayout;
     private javax.swing.JButton btnLogin;
-    private javax.swing.JButton btnLogout;
+    private javax.swing.JButton delete_btn;
+    private javax.swing.JPanel detailPasien;
+    private javax.swing.JButton detail_btn;
     private javax.swing.JTextField email;
+    private javax.swing.JTextField form_search;
+    private javax.swing.JLabel gender;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel nama;
+    private javax.swing.JLabel nik;
+    private javax.swing.JLabel no;
+    private javax.swing.JLabel notfound;
     private javax.swing.JPanel panelAuth;
-    private javax.swing.JPanel panelMain;
+    private javax.swing.JPanel panelDoctor;
+    private javax.swing.JPanel panelStaff;
     private javax.swing.JPasswordField password;
-    private javax.swing.JLabel present;
     // End of variables declaration//GEN-END:variables
 }
