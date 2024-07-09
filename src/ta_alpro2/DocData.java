@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -26,6 +27,7 @@ public class DocData extends javax.swing.JFrame {
     public DocData() {
         initComponents();
         initDB();
+        load_table();
     }
 
     private void handlePanel(String name) {
@@ -91,7 +93,41 @@ public class DocData extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
+    }
+    
+        private void load_table() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("No Patient");
+        model.addColumn("Code Patient");
+        model.addColumn("First Name");
+        model.addColumn("Last Name");
+        model.addColumn("Date of Birth");
+        model.addColumn("Gender");
+        model.addColumn("Contact Number");
+        model.addColumn("address");
+        model.addColumn("email");
 
+        try {
+            String sql = "SELECT patient_id, code_patients, first_name, last_name, date_of_birth, gender, contact_number, address, email FROM patients";
+            java.sql.Connection conn = (Connection) Config.configDB();
+            java.sql.Statement stmt = conn.createStatement();
+            java.sql.ResultSet res = stmt.executeQuery(sql);
+            while (res.next()) {
+                model.addRow(new Object[]
+                {res.getString("patient_id"), 
+                res.getString("code_patients"), 
+                res.getString("first_name"),
+                res.getString("last_name"), 
+                res.getString("date_of_birth"),
+                res.getString("gender"),
+                res.getString("contact_number"),
+                res.getString("address"),
+                res.getString("email")});
+            }
+            jTable1.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -104,6 +140,31 @@ public class DocData extends javax.swing.JFrame {
     private void initComponents() {
 
         baseLayout = new javax.swing.JPanel();
+        detailPasien = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        p_code = new javax.swing.JTextField();
+        p_last_name = new javax.swing.JTextField();
+        p_first_name = new javax.swing.JTextField();
+        p_date_of_birth = new javax.swing.JTextField();
+        p_gender = new javax.swing.JTextField();
+        p_number = new javax.swing.JTextField();
+        p_address = new javax.swing.JTextField();
+        p_email = new javax.swing.JTextField();
+        p_id = new javax.swing.JTextField();
+        btn_create = new javax.swing.JButton();
+        btn_delete = new javax.swing.JButton();
+        btn_update = new javax.swing.JButton();
+        btn_reset = new javax.swing.JButton();
         panelAuth = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -131,7 +192,6 @@ public class DocData extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        detailPasien = new javax.swing.JPanel();
         riwayatPasien = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -140,6 +200,177 @@ public class DocData extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         baseLayout.setLayout(new java.awt.CardLayout());
+
+        jLabel9.setText("No Patiens");
+
+        jLabel10.setText("Code Patiens");
+
+        jLabel11.setText("First Name");
+
+        jLabel12.setText("Last Name");
+
+        jLabel13.setText("Date Of Birth");
+
+        jLabel14.setText("Gender");
+
+        jLabel15.setText("Contact Number");
+
+        jLabel16.setText("Address");
+
+        jLabel17.setText("Email");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        p_first_name.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p_first_nameActionPerformed(evt);
+            }
+        });
+
+        btn_create.setText("Create");
+        btn_create.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_createActionPerformed(evt);
+            }
+        });
+
+        btn_delete.setText("Delete");
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
+
+        btn_update.setText("Update");
+        btn_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateActionPerformed(evt);
+            }
+        });
+
+        btn_reset.setText("Reset");
+        btn_reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_resetActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout detailPasienLayout = new javax.swing.GroupLayout(detailPasien);
+        detailPasien.setLayout(detailPasienLayout);
+        detailPasienLayout.setHorizontalGroup(
+            detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(detailPasienLayout.createSequentialGroup()
+                .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(detailPasienLayout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel15))
+                        .addGap(52, 52, 52)
+                        .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(p_address, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(p_number, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(p_gender, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(p_date_of_birth, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(p_last_name, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(p_code, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(p_first_name, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(p_id, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(p_email, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(detailPasienLayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(btn_create)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_update)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_delete)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_reset)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(110, 110, 110))
+        );
+
+        detailPasienLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {p_address, p_code, p_date_of_birth, p_email, p_first_name, p_gender, p_id, p_last_name, p_number});
+
+        detailPasienLayout.setVerticalGroup(
+            detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(detailPasienLayout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(detailPasienLayout.createSequentialGroup()
+                        .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(p_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(p_code, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(p_first_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(p_last_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(p_date_of_birth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(p_gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel15)
+                            .addComponent(p_number, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(p_address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel17)
+                            .addComponent(p_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(45, 45, 45)
+                        .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_create)
+                            .addComponent(btn_update)
+                            .addComponent(btn_delete)
+                            .addComponent(btn_reset))))
+                .addGap(112, 112, 112))
+        );
+
+        detailPasienLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {p_code, p_date_of_birth, p_first_name, p_gender, p_id, p_last_name, p_number});
+
+        baseLayout.add(detailPasien, "detailPasien");
 
         panelAuth.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -385,19 +616,6 @@ public class DocData extends javax.swing.JFrame {
 
         baseLayout.add(panelDoctor, "panelDoctor");
 
-        javax.swing.GroupLayout detailPasienLayout = new javax.swing.GroupLayout(detailPasien);
-        detailPasien.setLayout(detailPasienLayout);
-        detailPasienLayout.setHorizontalGroup(
-            detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1030, Short.MAX_VALUE)
-        );
-        detailPasienLayout.setVerticalGroup(
-            detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
-        );
-
-        baseLayout.add(detailPasien, "detailPasien");
-
         javax.swing.GroupLayout riwayatPasienLayout = new javax.swing.GroupLayout(riwayatPasien);
         riwayatPasien.setLayout(riwayatPasienLayout);
         riwayatPasienLayout.setHorizontalGroup(
@@ -450,6 +668,106 @@ public class DocData extends javax.swing.JFrame {
         handlePanel("detailPasien");
     }//GEN-LAST:event_detail_btnActionPerformed
 
+    private void p_first_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_p_first_nameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_p_first_nameActionPerformed
+
+    private void btn_createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_createActionPerformed
+        try {
+            String sql = "INSERT INTO patients (patient_id, code_patients, first_name, last_name, date_of_birth, gender, contact_number, address, email) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            java.sql.Connection conn = (Connection) Config.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, p_id.getText());
+            pst.setString(2, p_code.getText()); 
+            pst.setString(3, p_first_name.getText());
+            pst.setString(4, p_last_name.getText()); 
+            pst.setString(5, p_date_of_birth.getText()); 
+            pst.setString(6, p_gender.getText());
+            pst.setString(7, p_number.getText());
+            pst.setString(8, p_address.getText()); 
+            pst.setString(9, p_email.getText()); 
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data Berhasil di Tambah");
+            load_table();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Data Gagal di Tambah " + e.getMessage());
+        }      
+    }//GEN-LAST:event_btn_createActionPerformed
+
+    private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
+        try {
+            String sql = "UPDATE patients SET patient_id = '" + p_id.getText() + "', code_patients = '"
+                    + p_code.getText() + "', first_name = '" + p_first_name.getText() + "', last_name = '" + p_last_name.getText() 
+                    + "', date_of_birth = '" + p_date_of_birth.getText() + "', gender = '" + p_gender.getText() + "', contact_number = '" + p_number.getText() 
+                    + "', address = '" + p_address.getText() + "', email = '" + p_email.getText() + "' WHERE patient_id = '"
+                    + p_id.getText() + "'";
+            java.sql.Connection conn = (Connection) Config.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data Berhasil di Edit");
+            load_table();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Perubahan Data Gagal " + e.getMessage());
+        }
+    }//GEN-LAST:event_btn_updateActionPerformed
+
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+        try {
+            String sql = "delete from patients where patient_id='" + p_id.getText() + "'";
+            java.sql.Connection conn = (Connection) Config.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Data Berhasil di Hapus");
+            load_table();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_btn_deleteActionPerformed
+
+    private void btn_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetActionPerformed
+        p_id.setText("");
+        p_code.setText("");
+        p_first_name.setText("");
+        p_last_name.setText("");
+        p_date_of_birth.setText("");
+        p_gender.setText("");
+        p_number.setText("");
+        p_address.setText("");
+        p_email.setText("");
+    }//GEN-LAST:event_btn_resetActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int baris = jTable1.rowAtPoint(evt.getPoint());
+
+        String patient_id = jTable1.getValueAt(baris, 0).toString();
+        p_id.setText(patient_id);
+
+        String code_patients = jTable1.getValueAt(baris, 1).toString();
+        p_code.setText(code_patients);
+
+        String first_name = jTable1.getValueAt(baris, 2).toString();
+        p_first_name.setText(first_name);
+
+        String last_name = jTable1.getValueAt(baris, 3).toString();
+        p_last_name.setText(last_name);
+
+        String date_of_birth = jTable1.getValueAt(baris, 4).toString();
+        p_date_of_birth.setText(date_of_birth);
+
+        String gender = jTable1.getValueAt(baris, 5).toString();
+        p_gender.setText(gender);
+
+        String contact_number = jTable1.getValueAt(baris, 6).toString();
+        p_number.setText(contact_number);
+
+        String address = jTable1.getValueAt(baris, 7).toString();
+        p_address.setText(address);
+
+        String email = jTable1.getValueAt(baris, 8).toString();
+        p_email.setText(email);
+    }//GEN-LAST:event_jTable1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -489,6 +807,10 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JLabel alamat;
     private javax.swing.JPanel baseLayout;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btn_create;
+    private javax.swing.JButton btn_delete;
+    private javax.swing.JButton btn_reset;
+    private javax.swing.JButton btn_update;
     private javax.swing.JButton delete_btn;
     private javax.swing.JPanel detailPasien;
     private javax.swing.JButton detail_btn;
@@ -498,6 +820,14 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -505,12 +835,24 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel nama;
     private javax.swing.JLabel nik;
     private javax.swing.JLabel no;
     private javax.swing.JLabel notfound;
+    private javax.swing.JTextField p_address;
+    private javax.swing.JTextField p_code;
+    private javax.swing.JTextField p_date_of_birth;
+    private javax.swing.JTextField p_email;
+    private javax.swing.JTextField p_first_name;
+    private javax.swing.JTextField p_gender;
+    private javax.swing.JTextField p_id;
+    private javax.swing.JTextField p_last_name;
+    private javax.swing.JTextField p_number;
     private javax.swing.JPanel panelAuth;
     private javax.swing.JPanel panelDoctor;
     private javax.swing.JPanel panelStaff;
