@@ -27,7 +27,8 @@ public class DocData extends javax.swing.JFrame {
     public DocData() {
         initComponents();
         initDB();
-        load_table();
+        load_table1();
+        load_table2();
     }
 
     private void handlePanel(String name) {
@@ -95,7 +96,7 @@ public class DocData extends javax.swing.JFrame {
         }
     }
     
-        private void load_table() {
+        private void load_table1() {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("No Patient");
         model.addColumn("Code Patient");
@@ -129,6 +130,37 @@ public class DocData extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+        
+        private void load_table2() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("No Record");
+        model.addColumn("No Patient");
+        model.addColumn("Date Visit");
+        model.addColumn("No Doctor");
+        model.addColumn("Diagnosis");
+        model.addColumn("Treatment");
+        model.addColumn("Notes");
+
+        try {
+            String sql = "SELECT record_id, patient_id, visit_date, doctor_id, diagnosis, treatment, notes FROM medicalrecords";
+            java.sql.Connection conn = (Connection) Config.configDB();
+            java.sql.Statement stmt = conn.createStatement();
+            java.sql.ResultSet res = stmt.executeQuery(sql);
+            while (res.next()) {
+                model.addRow(new Object[]
+                {res.getString("record_id"), 
+                res.getString("patient_id"), 
+                res.getString("visit_date"),
+                res.getString("doctor_id"), 
+                res.getString("diagnosis"),
+                res.getString("treatment"),
+                res.getString("notes")});
+            }
+            jTable2.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -140,6 +172,27 @@ public class DocData extends javax.swing.JFrame {
     private void initComponents() {
 
         baseLayout = new javax.swing.JPanel();
+        panelRiwayatPasien = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        rp_id_patient = new javax.swing.JTextField();
+        rp_id_doctor = new javax.swing.JTextField();
+        rp_date_visit = new javax.swing.JTextField();
+        rp_diagnosis = new javax.swing.JTextField();
+        rp_treatment = new javax.swing.JTextField();
+        rp_notes = new javax.swing.JTextField();
+        rp_id_record = new javax.swing.JTextField();
+        btn_create_rp = new javax.swing.JButton();
+        btn_delete_rp = new javax.swing.JButton();
+        btn_update_rp = new javax.swing.JButton();
+        btn_reset_rp = new javax.swing.JButton();
         detailPasien = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -192,7 +245,6 @@ public class DocData extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        riwayatPasien = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DocData");
@@ -200,6 +252,156 @@ public class DocData extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         baseLayout.setLayout(new java.awt.CardLayout());
+
+        jLabel18.setText("No Record");
+
+        jLabel19.setText("No Patient");
+
+        jLabel20.setText("Date Visit");
+
+        jLabel21.setText("No Doctor");
+
+        jLabel22.setText("Diagnosis");
+
+        jLabel23.setText("Treatment");
+
+        jLabel24.setText("Notes");
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable2);
+
+        rp_date_visit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rp_date_visitActionPerformed(evt);
+            }
+        });
+
+        btn_create_rp.setText("Create");
+        btn_create_rp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_create_rpActionPerformed(evt);
+            }
+        });
+
+        btn_delete_rp.setText("Delete");
+        btn_delete_rp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_delete_rpActionPerformed(evt);
+            }
+        });
+
+        btn_update_rp.setText("Update");
+        btn_update_rp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_update_rpActionPerformed(evt);
+            }
+        });
+
+        btn_reset_rp.setText("Reset");
+        btn_reset_rp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_reset_rpActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelRiwayatPasienLayout = new javax.swing.GroupLayout(panelRiwayatPasien);
+        panelRiwayatPasien.setLayout(panelRiwayatPasienLayout);
+        panelRiwayatPasienLayout.setHorizontalGroup(
+            panelRiwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRiwayatPasienLayout.createSequentialGroup()
+                .addGroup(panelRiwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelRiwayatPasienLayout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(panelRiwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelRiwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+                                .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel24))
+                        .addGap(52, 52, 52)
+                        .addGroup(panelRiwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rp_notes, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rp_treatment, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rp_diagnosis, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rp_id_doctor, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rp_id_patient, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rp_date_visit, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rp_id_record, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelRiwayatPasienLayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(btn_create_rp)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_update_rp)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_delete_rp)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_reset_rp)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(110, 110, 110))
+        );
+        panelRiwayatPasienLayout.setVerticalGroup(
+            panelRiwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRiwayatPasienLayout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addGroup(panelRiwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelRiwayatPasienLayout.createSequentialGroup()
+                        .addGroup(panelRiwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel18)
+                            .addComponent(rp_id_record, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelRiwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel19)
+                            .addComponent(rp_id_patient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelRiwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20)
+                            .addComponent(rp_date_visit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelRiwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel21)
+                            .addComponent(rp_id_doctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelRiwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel22)
+                            .addComponent(rp_diagnosis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelRiwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel23)
+                            .addComponent(rp_treatment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelRiwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel24)
+                            .addComponent(rp_notes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(125, 125, 125)
+                        .addGroup(panelRiwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_create_rp)
+                            .addComponent(btn_update_rp)
+                            .addComponent(btn_delete_rp)
+                            .addComponent(btn_reset_rp))))
+                .addGap(112, 112, 112))
+        );
+
+        baseLayout.add(panelRiwayatPasien, "card6");
 
         jLabel9.setText("No Patiens");
 
@@ -616,19 +818,6 @@ public class DocData extends javax.swing.JFrame {
 
         baseLayout.add(panelDoctor, "panelDoctor");
 
-        javax.swing.GroupLayout riwayatPasienLayout = new javax.swing.GroupLayout(riwayatPasien);
-        riwayatPasien.setLayout(riwayatPasienLayout);
-        riwayatPasienLayout.setHorizontalGroup(
-            riwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1030, Short.MAX_VALUE)
-        );
-        riwayatPasienLayout.setVerticalGroup(
-            riwayatPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
-        );
-
-        baseLayout.add(riwayatPasien, "card6");
-
         getContentPane().add(baseLayout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 600));
 
         pack();
@@ -689,7 +878,7 @@ public class DocData extends javax.swing.JFrame {
             pst.setString(9, p_email.getText()); 
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data Berhasil di Tambah");
-            load_table();
+            load_table1();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Data Gagal di Tambah " + e.getMessage());
         }      
@@ -706,7 +895,7 @@ public class DocData extends javax.swing.JFrame {
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data Berhasil di Edit");
-            load_table();
+            load_table1();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Perubahan Data Gagal " + e.getMessage());
         }
@@ -719,7 +908,7 @@ public class DocData extends javax.swing.JFrame {
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             pst.executeUpdate();
             JOptionPane.showMessageDialog(this, "Data Berhasil di Hapus");
-            load_table();
+            load_table1();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -769,6 +958,97 @@ public class DocData extends javax.swing.JFrame {
         p_email.setText(email);
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        int baris = jTable2.rowAtPoint(evt.getPoint());
+
+        String record_id = jTable2.getValueAt(baris, 0).toString();
+        rp_id_record.setText(record_id);
+
+        String patient_id = jTable2.getValueAt(baris, 1).toString();
+        rp_id_patient.setText(patient_id);
+
+        String visit_date = jTable2.getValueAt(baris, 2).toString();
+        rp_date_visit.setText(visit_date);
+
+        String doctor_id = jTable2.getValueAt(baris, 3).toString();
+        rp_id_doctor.setText(doctor_id);
+
+        String diagnosis = jTable2.getValueAt(baris, 4).toString();
+        rp_diagnosis.setText(diagnosis);
+
+        String treatment = jTable2.getValueAt(baris, 5).toString();
+        rp_treatment.setText(treatment);
+
+        String notes = jTable2.getValueAt(baris, 6).toString();
+        rp_notes.setText(notes);
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void rp_date_visitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rp_date_visitActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rp_date_visitActionPerformed
+
+    private void btn_create_rpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_create_rpActionPerformed
+        try {
+            String sql = "INSERT INTO medicalrecords (record_id, patient_id, visit_date, doctor_id, diagnosis, treatment, notes)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            java.sql.Connection conn = (Connection) Config.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, rp_id_record.getText());
+            pst.setString(2, rp_id_patient.getText()); 
+            pst.setString(3, rp_date_visit.getText());
+            pst.setString(4, rp_id_doctor.getText()); 
+            pst.setString(5, rp_diagnosis.getText()); 
+            pst.setString(6, rp_treatment.getText());
+            pst.setString(7, rp_notes.getText());
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data Berhasil di Tambah");
+            load_table2();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Data Gagal di Tambah " + e.getMessage());
+        }      
+    }//GEN-LAST:event_btn_create_rpActionPerformed
+
+    private void btn_delete_rpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_delete_rpActionPerformed
+        try {
+            String sql = "delete from medicalrecords where record_id='" + rp_id_record.getText() + "'";
+            java.sql.Connection conn = (Connection) Config.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Data Berhasil di Hapus");
+            load_table2();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_btn_delete_rpActionPerformed
+
+    private void btn_update_rpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_update_rpActionPerformed
+        try {
+            String sql = "UPDATE medicalrecords SET record_id = '" + rp_id_record.getText() + "', patient_id = '"
+                    + rp_id_patient.getText() + "', visit_date = '" + rp_date_visit.getText() + "', doctor_id = '" + rp_id_doctor.getText() 
+                    + "', diagnosis = '" + rp_diagnosis.getText() + "', treatment = '" + rp_treatment.getText() + "', notes = '" + rp_notes.getText() 
+                    + "' WHERE record_id = '"
+                    + rp_id_record.getText() + "'";
+            java.sql.Connection conn = (Connection) Config.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data Berhasil di Edit");
+            load_table2();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Perubahan Data Gagal " + e.getMessage());
+        }
+    }//GEN-LAST:event_btn_update_rpActionPerformed
+
+    private void btn_reset_rpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reset_rpActionPerformed
+        rp_id_record.setText("");
+        rp_id_patient.setText("");
+        rp_date_visit.setText("");
+        rp_id_doctor.setText("");
+        rp_diagnosis.setText("");
+        rp_treatment.setText("");
+        rp_notes.setText("");
+        JOptionPane.showMessageDialog(this, "Data Berhasil di Reset");
+    }//GEN-LAST:event_btn_reset_rpActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -809,9 +1089,13 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JPanel baseLayout;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btn_create;
+    private javax.swing.JButton btn_create_rp;
     private javax.swing.JButton btn_delete;
+    private javax.swing.JButton btn_delete_rp;
     private javax.swing.JButton btn_reset;
+    private javax.swing.JButton btn_reset_rp;
     private javax.swing.JButton btn_update;
+    private javax.swing.JButton btn_update_rp;
     private javax.swing.JButton delete_btn;
     private javax.swing.JPanel detailPasien;
     private javax.swing.JButton detail_btn;
@@ -829,7 +1113,14 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -840,7 +1131,9 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JLabel nama;
     private javax.swing.JLabel nik;
     private javax.swing.JLabel no;
@@ -856,8 +1149,15 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JTextField p_number;
     private javax.swing.JPanel panelAuth;
     private javax.swing.JPanel panelDoctor;
+    private javax.swing.JPanel panelRiwayatPasien;
     private javax.swing.JPanel panelStaff;
     private javax.swing.JPasswordField password;
-    private javax.swing.JPanel riwayatPasien;
+    private javax.swing.JTextField rp_date_visit;
+    private javax.swing.JTextField rp_diagnosis;
+    private javax.swing.JTextField rp_id_doctor;
+    private javax.swing.JTextField rp_id_patient;
+    private javax.swing.JTextField rp_id_record;
+    private javax.swing.JTextField rp_notes;
+    private javax.swing.JTextField rp_treatment;
     // End of variables declaration//GEN-END:variables
 }
