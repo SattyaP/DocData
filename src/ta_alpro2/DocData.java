@@ -90,6 +90,7 @@ public class DocData extends javax.swing.JFrame {
     private void handleRoles(String role) {
         if (role.equals("Doctor")) {
             handlePanel("panelDoctor");
+            btnMain.setText("Riwayat Pasien");
         } else {
             JLabel[] field = {nama, nik};
 
@@ -101,6 +102,7 @@ public class DocData extends javax.swing.JFrame {
             }
 
             handlePanel("panelStaff");
+            btnMain.setText("Data Pasien");
         }
     }
 
@@ -250,7 +252,7 @@ public class DocData extends javax.swing.JFrame {
         jLabel48 = new javax.swing.JLabel();
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        btnMain = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         baseLayout = new javax.swing.JPanel();
         panelAuth = new javax.swing.JPanel();
@@ -324,11 +326,27 @@ public class DocData extends javax.swing.JFrame {
         p_email = new javax.swing.JTextField();
         btnSubmit = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        dashboard = new javax.swing.JPanel();
+        heading_detail1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        total_pasien = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        panelSetting = new javax.swing.JPanel();
+        jLabel25 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        username = new javax.swing.JLabel();
+        emails = new javax.swing.JLabel();
+        rolest = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DocData");
         setBackground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
         setSize(new java.awt.Dimension(1024, 600));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -359,17 +377,18 @@ public class DocData extends javax.swing.JFrame {
         Sidebar.setBackground(new java.awt.Color(255, 255, 255));
         Sidebar.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 1, new java.awt.Color(153, 153, 153)));
 
-        jLabel46.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel46.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel46.setText("Selamat Datang");
 
-        present_name.setFont(new java.awt.Font("SansSerif", 1, 15)); // NOI18N
+        present_name.setFont(new java.awt.Font("Poppins", 1, 15)); // NOI18N
         present_name.setText("Dr. Kevin SH.S");
 
         jLabel48.setText("Foto Doctor");
         jLabel48.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jButton10.setBackground(new java.awt.Color(255, 0, 0));
-        jButton10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton10.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        jButton10.setForeground(new java.awt.Color(255, 255, 255));
         jButton10.setText("Logout");
         jButton10.setBorder(null);
         jButton10.addActionListener(new java.awt.event.ActionListener() {
@@ -378,6 +397,7 @@ public class DocData extends javax.swing.JFrame {
             }
         });
 
+        jButton11.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jButton11.setText("Dashboard");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -385,14 +405,21 @@ public class DocData extends javax.swing.JFrame {
             }
         });
 
-        jButton12.setText("Data Pasien");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        btnMain.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        btnMain.setText("Data Pasien");
+        btnMain.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                btnMainActionPerformed(evt);
             }
         });
 
+        jButton13.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         jButton13.setText("Setting");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout SidebarLayout = new javax.swing.GroupLayout(Sidebar);
         Sidebar.setLayout(SidebarLayout);
@@ -411,7 +438,7 @@ public class DocData extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(SidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(31, 31, 31))
         );
@@ -430,7 +457,7 @@ public class DocData extends javax.swing.JFrame {
                 .addGap(87, 87, 87)
                 .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnMain, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(183, 183, 183))
@@ -527,11 +554,10 @@ public class DocData extends javax.swing.JFrame {
         panelStaff.setBackground(new java.awt.Color(241, 242, 246));
         panelStaff.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel8.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
         jLabel8.setText("Antrian");
         panelStaff.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, -1, -1));
 
-        form_search.setText("satya");
         form_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 form_searchActionPerformed(evt);
@@ -539,7 +565,11 @@ public class DocData extends javax.swing.JFrame {
         });
         panelStaff.add(form_search, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 570, 40));
 
+        jButton2.setBackground(new java.awt.Color(0, 0, 255));
+        jButton2.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Cari");
+        jButton2.setBorder(null);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -554,9 +584,12 @@ public class DocData extends javax.swing.JFrame {
 
         nik.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
-        notfound.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        notfound.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         notfound.setText("Pasien tidak ditemukan");
 
+        detail_btn.setBackground(new java.awt.Color(51, 51, 51));
+        detail_btn.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        detail_btn.setForeground(new java.awt.Color(255, 255, 255));
         detail_btn.setText("Detail");
         detail_btn.setEnabled(false);
         detail_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -565,6 +598,8 @@ public class DocData extends javax.swing.JFrame {
             }
         });
 
+        delete_btn.setBackground(new java.awt.Color(255, 0, 0));
+        delete_btn.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         delete_btn.setText("Delete");
         delete_btn.setEnabled(false);
         delete_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -573,6 +608,8 @@ public class DocData extends javax.swing.JFrame {
             }
         });
 
+        edit_btn.setBackground(new java.awt.Color(255, 255, 0));
+        edit_btn.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         edit_btn.setText("Edit");
         edit_btn.setEnabled(false);
         edit_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -581,6 +618,7 @@ public class DocData extends javax.swing.JFrame {
             }
         });
 
+        add_antrianBtn.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         add_antrianBtn.setText("Tambah Antrian");
         add_antrianBtn.setEnabled(false);
         add_antrianBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -603,7 +641,7 @@ public class DocData extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(notfound)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                 .addComponent(add_antrianBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(detail_btn)
@@ -616,7 +654,7 @@ public class DocData extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(38, Short.MAX_VALUE)
+                .addContainerGap(36, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(notfound)
@@ -636,7 +674,11 @@ public class DocData extends javax.swing.JFrame {
 
         panelStaff.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 710, 100));
 
+        jButton3.setBackground(new java.awt.Color(51, 51, 51));
+        jButton3.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Tambah Pasien");
+        jButton3.setBorder(null);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -649,17 +691,19 @@ public class DocData extends javax.swing.JFrame {
 
         panelStaff.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, 250, 140));
 
-        jLabel10.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
         jLabel10.setText("Data Pasien");
         panelStaff.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
 
+        jLabel23.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel23.setText("Status Doctor :");
-        panelStaff.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, -1, -1));
+        panelStaff.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 30, -1, -1));
 
         status.setForeground(new java.awt.Color(255, 0, 0));
         status.setText("Not Ready yet");
-        panelStaff.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 40, -1, -1));
+        panelStaff.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 30, -1, -1));
 
+        jButton1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jButton1.setText("NEXT ANTRIAN");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -670,9 +714,10 @@ public class DocData extends javax.swing.JFrame {
 
         baseLayout.add(panelStaff, "panelStaff");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Poppins", 0, 24)); // NOI18N
         jLabel1.setText("Status :");
 
+        btn_status.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
         btn_status.setText("Ready");
         btn_status.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -680,13 +725,14 @@ public class DocData extends javax.swing.JFrame {
             }
         });
 
-        status_doctor.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        status_doctor.setFont(new java.awt.Font("Poppins", 0, 24)); // NOI18N
         status_doctor.setForeground(new java.awt.Color(255, 0, 0));
         status_doctor.setText("Not Ready yet");
 
         pasienLayout.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         pasienLayout.setLayout(new java.awt.CardLayout());
 
+        jLabel24.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel24.setText("Antrian Kosong");
 
         javax.swing.GroupLayout empty_antrianLayout = new javax.swing.GroupLayout(empty_antrian);
@@ -696,14 +742,14 @@ public class DocData extends javax.swing.JFrame {
             .addGroup(empty_antrianLayout.createSequentialGroup()
                 .addGap(299, 299, 299)
                 .addComponent(jLabel24)
-                .addContainerGap(312, Short.MAX_VALUE))
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         empty_antrianLayout.setVerticalGroup(
             empty_antrianLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(empty_antrianLayout.createSequentialGroup()
                 .addGap(159, 159, 159)
                 .addComponent(jLabel24)
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
         pasienLayout.add(empty_antrian, "empty_antrian");
@@ -747,20 +793,22 @@ public class DocData extends javax.swing.JFrame {
                 .addComponent(btn_status)
                 .addGap(32, 32, 32)
                 .addComponent(pasienLayout, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         baseLayout.add(panelDoctor, "panelDoctor");
 
         detailPasien.setBackground(new java.awt.Color(241, 242, 246));
 
-        heading_detail.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        heading_detail.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
         heading_detail.setText("Detail Pasien");
 
+        jLabel9.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel9.setText("Nama Pasien");
 
         d_name.setEditable(false);
 
+        jLabel11.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel11.setText("Kode Unik");
 
         d_nik.setEditable(false);
@@ -770,18 +818,22 @@ public class DocData extends javax.swing.JFrame {
             }
         });
 
+        jLabel12.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel12.setText("No Telepon");
 
         d_no.setEditable(false);
 
+        jLabel13.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel13.setText("Alamat");
 
         d_address.setEditable(false);
 
+        jLabel14.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel14.setText("Jenis Kelamin");
 
         d_jk.setEditable(false);
 
+        jLabel15.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel15.setText("Tanggal Bergabung");
 
         d_created.setEditable(false);
@@ -812,7 +864,7 @@ public class DocData extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(medis_record);
 
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
         jLabel7.setText("Riwayat Medis");
 
         javax.swing.GroupLayout detailPasienLayout = new javax.swing.GroupLayout(detailPasien);
@@ -854,9 +906,9 @@ public class DocData extends javax.swing.JFrame {
         detailPasienLayout.setVerticalGroup(
             detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(detailPasienLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(38, 38, 38)
                 .addComponent(heading_detail)
-                .addGap(25, 25, 25)
+                .addGap(18, 18, 18)
                 .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(jLabel12))
@@ -880,7 +932,7 @@ public class DocData extends javax.swing.JFrame {
                 .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(d_jk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(d_created, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -891,11 +943,13 @@ public class DocData extends javax.swing.JFrame {
 
         createPasien.setBackground(new java.awt.Color(241, 242, 246));
 
-        headingForm.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        headingForm.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
         headingForm.setText("Tambah Pasien");
 
+        jLabel16.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel16.setText("First Name");
 
+        jLabel17.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel17.setText("Last Name");
 
         p_last_name.addActionListener(new java.awt.event.ActionListener() {
@@ -904,18 +958,24 @@ public class DocData extends javax.swing.JFrame {
             }
         });
 
+        jLabel18.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel18.setText("Tgl Lahir");
 
+        jLabel19.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel19.setText("Jenis Kelamin");
 
         p_gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "L", "P" }));
 
+        jLabel20.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel20.setText("Contact Pasien");
 
+        jLabel21.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel21.setText("Alamat");
 
+        jLabel22.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel22.setText("Email");
 
+        btnSubmit.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         btnSubmit.setText("Tambah");
         btnSubmit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -923,6 +983,9 @@ public class DocData extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setBackground(new java.awt.Color(102, 102, 102));
+        jButton5.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Back");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1005,13 +1068,175 @@ public class DocData extends javax.swing.JFrame {
                 .addComponent(p_gender, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addGroup(createPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(92, Short.MAX_VALUE))
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         baseLayout.add(createPasien, "createPasien");
         createPasien.getAccessibleContext().setAccessibleName("");
+
+        heading_detail1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        heading_detail1.setText("Dashboard");
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        total_pasien.setFont(new java.awt.Font("Poppins", 0, 36)); // NOI18N
+        total_pasien.setText("0");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(total_pasien)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(total_pasien)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        jLabel26.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jLabel26.setText("Total Pasien");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel26)))
+                .addContainerGap(540, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel26)
+                .addContainerGap(271, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout dashboardLayout = new javax.swing.GroupLayout(dashboard);
+        dashboard.setLayout(dashboardLayout);
+        dashboardLayout.setHorizontalGroup(
+            dashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dashboardLayout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addGroup(dashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(heading_detail1)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+        dashboardLayout.setVerticalGroup(
+            dashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dashboardLayout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(heading_detail1)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+
+        baseLayout.add(dashboard, "dashboard");
+
+        jLabel25.setFont(new java.awt.Font("Poppins", 1, 18)); // NOI18N
+        jLabel25.setText("Settings Account");
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel27.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        jLabel27.setText("Username :");
+
+        jLabel28.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        jLabel28.setText("Email :");
+
+        jLabel29.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        jLabel29.setText("Jabatan :");
+
+        username.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+
+        emails.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+
+        rolest.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel27)
+                        .addGap(18, 18, 18)
+                        .addComponent(username))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel28)
+                            .addComponent(jLabel29))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rolest)
+                            .addComponent(emails))))
+                .addContainerGap(438, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27)
+                    .addComponent(username))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(emails))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29)
+                    .addComponent(rolest))
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panelSettingLayout = new javax.swing.GroupLayout(panelSetting);
+        panelSetting.setLayout(panelSettingLayout);
+        panelSettingLayout.setHorizontalGroup(
+            panelSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSettingLayout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(panelSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel25))
+                .addContainerGap(162, Short.MAX_VALUE))
+        );
+        panelSettingLayout.setVerticalGroup(
+            panelSettingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSettingLayout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(jLabel25)
+                .addGap(29, 29, 29)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(289, Short.MAX_VALUE))
+        );
+
+        baseLayout.add(panelSetting, "panelSetting");
 
         getContentPane().add(baseLayout, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 780, 560));
 
@@ -1052,9 +1277,9 @@ public class DocData extends javax.swing.JFrame {
                     rs.close();
 
                     if (session.getRole().equals("Doctor")) {
-                        present_name.setText("Dr " + session.getUsername());
+                        present_name.setText("Dr. " + session.getUsername());
                     } else {
-                        present_name.setText("Staff " + session.getUsername());
+                        present_name.setText("Staff. " + session.getUsername());
                     }
                 }
             } else {
@@ -1236,13 +1461,26 @@ public class DocData extends javax.swing.JFrame {
     }//GEN-LAST:event_form_searchActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
+        handlePanel("dashboard");
+
+        try {
+            sql = "SELECT COUNT(patient_id) as total FROM patients";
+            pstmt = con.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                total_pasien.setText(rs.getString("total"));
+
+                rs.close();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Data Gagal Diambil " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton11ActionPerformed
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        UserSession session = UserSession.getInstance();
+    private void btnMainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMainActionPerformed
         handleRoles(session.getRole());
-    }//GEN-LAST:event_jButton12ActionPerformed
+    }//GEN-LAST:event_btnMainActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         logout();
@@ -1265,6 +1503,26 @@ public class DocData extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        handlePanel("panelSetting");
+
+        try {
+            sql = "SELECT username, email, role_name FROM users s join roles r on r.role_id = s.role_id WHERE username = '"+ session.getUsername() +"'";
+            pstmt = con.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                username.setText(rs.getString("username"));
+                emails.setText(rs.getString("email"));
+                rolest.setText(rs.getString("role_name"));
+
+                rs.close();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Data Gagal Diambil " + e.getMessage());
+        }
+    }//GEN-LAST:event_jButton13ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1315,6 +1573,7 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JButton add_antrianBtn;
     private javax.swing.JPanel baseLayout;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnMain;
     private javax.swing.JButton btnSubmit;
     private javax.swing.JButton btn_status;
     private javax.swing.JPanel createPasien;
@@ -1324,19 +1583,21 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JTextField d_name;
     private javax.swing.JTextField d_nik;
     private javax.swing.JTextField d_no;
+    private javax.swing.JPanel dashboard;
     private javax.swing.JButton delete_btn;
     private javax.swing.JPanel detailPasien;
     private javax.swing.JButton detail_btn;
     private javax.swing.JButton edit_btn;
     private javax.swing.JTextField email;
+    private javax.swing.JLabel emails;
     private javax.swing.JPanel empty_antrian;
     private javax.swing.JTextField form_search;
     private javax.swing.JLabel headingForm;
     private javax.swing.JLabel heading_detail;
+    private javax.swing.JLabel heading_detail1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -1358,6 +1619,11 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel46;
@@ -1370,6 +1636,9 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JList<String> list_antrian;
@@ -1387,11 +1656,15 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JTextField p_number;
     private javax.swing.JPanel panelAuth;
     private javax.swing.JPanel panelDoctor;
+    private javax.swing.JPanel panelSetting;
     private javax.swing.JPanel panelStaff;
     private javax.swing.JPanel pasienLayout;
     private javax.swing.JPasswordField password;
     private javax.swing.JLabel present_name;
+    private javax.swing.JLabel rolest;
     private javax.swing.JLabel status;
     private javax.swing.JLabel status_doctor;
+    private javax.swing.JLabel total_pasien;
+    private javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
 }
