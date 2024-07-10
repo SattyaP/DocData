@@ -47,6 +47,7 @@ public class DocData extends javax.swing.JFrame {
 
     public void updateAntrianModel(String message) {
         SwingUtilities.invokeLater(() -> {
+            System.out.print(message);
             model.addElement(message);
             list_antrian.setModel(model);
         });
@@ -68,8 +69,9 @@ public class DocData extends javax.swing.JFrame {
 
     public void displayAntrian(String code) {
         SwingUtilities.invokeLater(() -> {
-//            CardLayout panels = (CardLayout) pasienLayout.getLayout();
-//            panels.show(pasienLayout, "medical_check");
+            String kodePasien = code.split("-")[0];
+            codes.setText(kodePasien);
+            btnPeriksa.setEnabled(true);
         });
     }
 
@@ -91,6 +93,7 @@ public class DocData extends javax.swing.JFrame {
         if (role.equals("Doctor")) {
             handlePanel("panelDoctor");
             btnMain.setText("Riwayat Pasien");
+            btnAddRiwayat.setVisible(false);
         } else {
             JLabel[] field = {nama, nik};
 
@@ -103,6 +106,7 @@ public class DocData extends javax.swing.JFrame {
 
             handlePanel("panelStaff");
             btnMain.setText("Data Pasien");
+            btnAddRiwayat.setVisible(true);
         }
     }
 
@@ -166,6 +170,10 @@ public class DocData extends javax.swing.JFrame {
                 app.updateStatus(message);
             } else {
                 app.updateAntrianModel(message);
+            }
+            
+            if (message.trim().toLowerCase().contains(" - ")) {
+                app.displayAntrian(message);
             }
         }
 
@@ -287,10 +295,10 @@ public class DocData extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btn_status = new javax.swing.JButton();
         status_doctor = new javax.swing.JLabel();
-        pasienLayout = new javax.swing.JPanel();
-        empty_antrian = new javax.swing.JPanel();
-        jLabel24 = new javax.swing.JLabel();
         medical_check = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        codes = new javax.swing.JLabel();
+        btnPeriksa = new javax.swing.JButton();
         detailPasien = new javax.swing.JPanel();
         heading_detail = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -308,6 +316,7 @@ public class DocData extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         medis_record = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
+        btnAddRiwayat = new javax.swing.JButton();
         createPasien = new javax.swing.JPanel();
         headingForm = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -699,6 +708,7 @@ public class DocData extends javax.swing.JFrame {
         jLabel23.setText("Status Doctor :");
         panelStaff.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 30, -1, -1));
 
+        status.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         status.setForeground(new java.awt.Color(255, 0, 0));
         status.setText("Not Ready yet");
         panelStaff.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 30, -1, -1));
@@ -729,43 +739,46 @@ public class DocData extends javax.swing.JFrame {
         status_doctor.setForeground(new java.awt.Color(255, 0, 0));
         status_doctor.setText("Not Ready yet");
 
-        pasienLayout.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        pasienLayout.setLayout(new java.awt.CardLayout());
+        medical_check.setBackground(new java.awt.Color(255, 255, 255));
+        medical_check.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel24.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel24.setText("Antrian Kosong");
+        jLabel24.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        jLabel24.setText("Code Pasien :");
 
-        javax.swing.GroupLayout empty_antrianLayout = new javax.swing.GroupLayout(empty_antrian);
-        empty_antrian.setLayout(empty_antrianLayout);
-        empty_antrianLayout.setHorizontalGroup(
-            empty_antrianLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(empty_antrianLayout.createSequentialGroup()
-                .addGap(299, 299, 299)
-                .addComponent(jLabel24)
-                .addContainerGap(303, Short.MAX_VALUE))
-        );
-        empty_antrianLayout.setVerticalGroup(
-            empty_antrianLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(empty_antrianLayout.createSequentialGroup()
-                .addGap(159, 159, 159)
-                .addComponent(jLabel24)
-                .addContainerGap(167, Short.MAX_VALUE))
-        );
-
-        pasienLayout.add(empty_antrian, "empty_antrian");
+        btnPeriksa.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        btnPeriksa.setText("Mulai Memeriksa");
+        btnPeriksa.setEnabled(false);
+        btnPeriksa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPeriksaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout medical_checkLayout = new javax.swing.GroupLayout(medical_check);
         medical_check.setLayout(medical_checkLayout);
         medical_checkLayout.setHorizontalGroup(
             medical_checkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 693, Short.MAX_VALUE)
+            .addGroup(medical_checkLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(medical_checkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnPeriksa)
+                    .addGroup(medical_checkLayout.createSequentialGroup()
+                        .addComponent(jLabel24)
+                        .addGap(31, 31, 31)
+                        .addComponent(codes)))
+                .addContainerGap(487, Short.MAX_VALUE))
         );
         medical_checkLayout.setVerticalGroup(
             medical_checkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 345, Short.MAX_VALUE)
+            .addGroup(medical_checkLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(medical_checkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(codes))
+                .addGap(18, 18, 18)
+                .addComponent(btnPeriksa)
+                .addContainerGap(261, Short.MAX_VALUE))
         );
-
-        pasienLayout.add(medical_check, "medical_check");
 
         javax.swing.GroupLayout panelDoctorLayout = new javax.swing.GroupLayout(panelDoctor);
         panelDoctor.setLayout(panelDoctorLayout);
@@ -779,8 +792,8 @@ public class DocData extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(status_doctor))
-                    .addComponent(pasienLayout, javax.swing.GroupLayout.PREFERRED_SIZE, 697, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(35, Short.MAX_VALUE))
+                    .addComponent(medical_check, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         panelDoctorLayout.setVerticalGroup(
             panelDoctorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -791,9 +804,9 @@ public class DocData extends javax.swing.JFrame {
                     .addComponent(status_doctor))
                 .addGap(18, 18, 18)
                 .addComponent(btn_status)
-                .addGap(32, 32, 32)
-                .addComponent(pasienLayout, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(medical_check, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         baseLayout.add(panelDoctor, "panelDoctor");
@@ -867,15 +880,20 @@ public class DocData extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Poppins", 1, 24)); // NOI18N
         jLabel7.setText("Riwayat Medis");
 
+        btnAddRiwayat.setText("Tambah Riwayat");
+
         javax.swing.GroupLayout detailPasienLayout = new javax.swing.GroupLayout(detailPasien);
         detailPasien.setLayout(detailPasienLayout);
         detailPasienLayout.setHorizontalGroup(
             detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(detailPasienLayout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(detailPasienLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAddRiwayat))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
                     .addComponent(heading_detail)
                     .addGroup(detailPasienLayout.createSequentialGroup()
                         .addComponent(jLabel9)
@@ -933,7 +951,9 @@ public class DocData extends javax.swing.JFrame {
                     .addComponent(d_jk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(d_created, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel7)
+                .addGroup(detailPasienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(btnAddRiwayat))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1501,14 +1521,16 @@ public class DocData extends javax.swing.JFrame {
     }//GEN-LAST:event_add_antrianBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String data = model.getElementAt(0);
 
+        client.send(data);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         handlePanel("panelSetting");
 
         try {
-            sql = "SELECT username, email, role_name FROM users s join roles r on r.role_id = s.role_id WHERE username = '"+ session.getUsername() +"'";
+            sql = "SELECT username, email, role_name FROM users s join roles r on r.role_id = s.role_id WHERE username = '" + session.getUsername() + "'";
             pstmt = con.prepareStatement(sql);
             rs = pstmt.executeQuery();
 
@@ -1523,6 +1545,31 @@ public class DocData extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Data Gagal Diambil " + e.getMessage());
         }
     }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void btnPeriksaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeriksaActionPerformed
+        try {
+            handlePanel("detailPasien");
+            btnAddRiwayat.setVisible(true);
+            sql = "select * from patients where code = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, codes.getText());
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                d_name.setText(rs.getString("first_name") + " " + rs.getString("last_name"));
+                d_nik.setText(rs.getString("code"));
+                d_no.setText(rs.getString("contact_number"));
+                d_jk.setText(rs.getString("gender"));
+                d_address.setText(rs.getString("address"));
+                d_created.setText(rs.getString("created_at"));
+                loadMedicalRecords();
+            } else {
+                System.out.print("Data Tidak Ditemukan");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_btnPeriksaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1572,10 +1619,13 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JPanel Sidebar;
     private javax.swing.JButton add_antrianBtn;
     private javax.swing.JPanel baseLayout;
+    private javax.swing.JButton btnAddRiwayat;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnMain;
+    private javax.swing.JButton btnPeriksa;
     private javax.swing.JButton btnSubmit;
     private javax.swing.JButton btn_status;
+    private javax.swing.JLabel codes;
     private javax.swing.JPanel createPasien;
     private javax.swing.JTextField d_address;
     private javax.swing.JTextField d_created;
@@ -1590,7 +1640,6 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JButton edit_btn;
     private javax.swing.JTextField email;
     private javax.swing.JLabel emails;
-    private javax.swing.JPanel empty_antrian;
     private javax.swing.JTextField form_search;
     private javax.swing.JLabel headingForm;
     private javax.swing.JLabel heading_detail;
@@ -1658,7 +1707,6 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JPanel panelDoctor;
     private javax.swing.JPanel panelSetting;
     private javax.swing.JPanel panelStaff;
-    private javax.swing.JPanel pasienLayout;
     private javax.swing.JPasswordField password;
     private javax.swing.JLabel present_name;
     private javax.swing.JLabel rolest;
