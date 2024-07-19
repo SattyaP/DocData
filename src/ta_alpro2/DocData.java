@@ -56,9 +56,9 @@ public class DocData extends javax.swing.JFrame {
     public void updateStatus(String bool) {
         SwingUtilities.invokeLater(() -> {
             status.setText(bool);
-            if (status.getText().toLowerCase().contains("not")) {
+            if (bool.toLowerCase().contains("not")) {
                 status.setForeground(Color.RED);
-            } else if (status.getText().toLowerCase().contains("Sedang")) {
+            } else if (bool.toLowerCase().contains("checking")) {
                 status.setForeground(Color.ORANGE);
             } else {
                 status.setForeground(Color.GREEN);
@@ -119,7 +119,7 @@ public class DocData extends javax.swing.JFrame {
         }
     }
 
-    public void loadMedicalRecords() {
+    public void loadMedicalRecords(Boolean isDokter) {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Nama Dokter");
         model.addColumn("Tanggal Kunjungan");
@@ -128,7 +128,12 @@ public class DocData extends javax.swing.JFrame {
         model.addColumn("Notes");
 
         try {
-            sql = "SELECT username, s.created_at, diagnosis, treatment, notes FROM medicalrecords s JOIN users u ON u.user_id = s.doctor_id JOIN patients p ON p.patient_id = s.patient_id";
+            if (isDokter) {
+                sql = "SELECT username, s.created_at, diagnosis, treatment, notes FROM medicalrecords s JOIN users u ON u.user_id = s.doctor_id JOIN patients p ON p.patient_id = s.patient_id where code = '" + codes.getText().trim() + "'";
+            } else {
+                sql = "SELECT username, s.created_at, diagnosis, treatment, notes FROM medicalrecords s JOIN users u ON u.user_id = s.doctor_id JOIN patients p ON p.patient_id = s.patient_id where code = '" + nik.getText().trim() + "'";
+            }
+
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
 
@@ -168,7 +173,7 @@ public class DocData extends javax.swing.JFrame {
         }
 
         public void onMessage(String message) {
-            if (message.toLowerCase().contains("ready")) {
+            if (message.toLowerCase().contains("ready") || message.toLowerCase().contains("checking")) {
                 app.updateStatus(message);
             } else if (message.startsWith("NEXT_ANTRIAN:")) {
                 app.displayAntrian(message.substring("NEXT_ANTRIAN:".length()));
@@ -291,6 +296,7 @@ public class DocData extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         status = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        clearAntrian = new javax.swing.JButton();
         panelDoctor = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btn_status = new javax.swing.JButton();
@@ -713,6 +719,11 @@ public class DocData extends javax.swing.JFrame {
         panelStaff.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 140, 121, 38));
 
         list_antrian.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        list_antrian.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                list_antrianMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(list_antrian);
 
         panelStaff.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, 250, 140));
@@ -738,6 +749,17 @@ public class DocData extends javax.swing.JFrame {
             }
         });
         panelStaff.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 410, 150, 70));
+
+        clearAntrian.setBackground(new java.awt.Color(204, 0, 0));
+        clearAntrian.setFont(new java.awt.Font("Poppins", 1, 12)); // NOI18N
+        clearAntrian.setForeground(new java.awt.Color(255, 255, 255));
+        clearAntrian.setText("Bersihkan Antrian");
+        clearAntrian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearAntrianActionPerformed(evt);
+            }
+        });
+        panelStaff.add(clearAntrian, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 420, 160, 50));
 
         baseLayout.add(panelStaff, "panelStaff");
 
@@ -1455,7 +1477,8 @@ public class DocData extends javax.swing.JFrame {
             handlePanel("detailPasien");
             sql = "select * from patients where code = ?";
             pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, nik.getText());
+            String niks = nik.getText().trim();
+            pstmt.setString(1, niks);
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -1465,7 +1488,8 @@ public class DocData extends javax.swing.JFrame {
                 d_jk.setText(rs.getString("gender"));
                 d_address.setText(rs.getString("address"));
                 d_created.setText(rs.getString("created_at"));
-                loadMedicalRecords();
+                loadMedicalRecords(false);
+                btnAddRiwayat.setVisible(false);
             } else {
                 System.out.print("Data Tidak Ditemukan");
             }
@@ -1634,7 +1658,9 @@ public class DocData extends javax.swing.JFrame {
 
     private void btnMainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMainActionPerformed
         handleRoles(session.getRole());
-        loadMedicalRecords();
+        if (session.getRole().equalsIgnoreCase("Dokter")) {
+            loadMedicalRecords(true);
+        }
     }//GEN-LAST:event_btnMainActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
@@ -1652,13 +1678,17 @@ public class DocData extends javax.swing.JFrame {
     }//GEN-LAST:event_add_antrianBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (model.getElementAt(0) != null) {
+        if (!model.isEmpty()) {
             String nextAntrianMessage = "NEXT_ANTRIAN:" + model.getElementAt(0);
-            if (status.getText().equals("Not Ready yet")) {
+            if (status.getText().equals("Not Ready yet") || status.getText().toLowerCase().equals("checking")) {
                 JOptionPane.showMessageDialog(this, "Dokter Belum Siap");
             } else {
-                client.send(nextAntrianMessage);
-                model.removeElementAt(0);
+                if (btnPeriksa.isEnabled()) {
+                    JOptionPane.showMessageDialog(this, "Sedang ada pasien berlangsung");
+                } else {
+                    client.send(nextAntrianMessage);
+                    model.removeElementAt(0);
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Antrian kosong");
@@ -1689,6 +1719,8 @@ public class DocData extends javax.swing.JFrame {
     private void btnPeriksaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeriksaActionPerformed
         try {
             handlePanel("detailPasien");
+            client.send("Checking");
+
             btnAddRiwayat.setVisible(true);
             sql = "select * from patients where code = ?";
             pstmt = con.prepareStatement(sql);
@@ -1702,7 +1734,7 @@ public class DocData extends javax.swing.JFrame {
                 d_jk.setText(rs.getString("gender"));
                 d_address.setText(rs.getString("address"));
                 d_created.setText(rs.getString("created_at"));
-                loadMedicalRecords();
+                loadMedicalRecords(true);
 
             } else {
                 System.out.print("Data Tidak Ditemukan");
@@ -1742,10 +1774,10 @@ public class DocData extends javax.swing.JFrame {
             pstmt.setString(5, rp_notes.getText());
             pstmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Data Berhasil di Tambah");
+            JOptionPane.showMessageDialog(null, "Riwayat Berhasil di Tambah");
 
-            handlePanel("detailPasien");
-            loadMedicalRecords();
+            handlePanel("panelDoctor");
+            client.send("Ready");
 
             codes.setText("");
             btnPeriksa.setEnabled(false);
@@ -1754,10 +1786,32 @@ public class DocData extends javax.swing.JFrame {
             rp_diagnosis.setText("");
             rp_treatment.setText("");
             rp_notes.setText("");
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Data Gagal di Tambah " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Riwayat Gagal di Tambah " + e.getMessage());
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void clearAntrianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAntrianActionPerformed
+        int confirmation = JOptionPane.showConfirmDialog(null, "Apakah kamu benar - benar ingin menghapus pasien ini ?", "Hapus Pasien", JOptionPane.YES_NO_OPTION);
+        if (confirmation == JOptionPane.YES_OPTION) {
+            model.clear();
+        }
+
+    }//GEN-LAST:event_clearAntrianActionPerformed
+
+    private void list_antrianMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_list_antrianMouseClicked
+        int selectedIndex = list_antrian.getSelectedIndex();
+        if (selectedIndex != -1) {
+            String selectedElement = (String) list_antrian.getModel().getElementAt(selectedIndex);
+            String[] parts = selectedElement.split(" - ");//            
+            nama.setText(parts[1].trim());
+            nik.setText(parts[0].trim());
+        } else {
+            nama.setText("");
+            nik.setText("");
+        }
+    }//GEN-LAST:event_list_antrianMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1813,6 +1867,7 @@ public class DocData extends javax.swing.JFrame {
     private javax.swing.JButton btnPeriksa;
     private javax.swing.JButton btnSubmit;
     private javax.swing.JButton btn_status;
+    private javax.swing.JButton clearAntrian;
     private javax.swing.JLabel codes;
     private javax.swing.JPanel createPasien;
     private javax.swing.JTextField d_address;
