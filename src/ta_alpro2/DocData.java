@@ -150,7 +150,7 @@ public class DocData extends javax.swing.JFrame {
 
     public void initSocket() {
         try {
-            client = new SimpleWebSocketClient(new URI("ws://localhost:8880"), this);
+            client = new SimpleWebSocketClient(new URI("ws://localhost:8881"), this);
             client.connect();
         } catch (Exception e) {
             e.printStackTrace();
@@ -1683,7 +1683,7 @@ public class DocData extends javax.swing.JFrame {
             if (status.getText().equals("Not Ready yet") || status.getText().toLowerCase().equals("checking")) {
                 JOptionPane.showMessageDialog(this, "Dokter Belum Siap");
             } else {
-                if (btnPeriksa.isEnabled()) {
+                if (btnPeriksa.isEnabled() && status.getText().equals("Checking")) {
                     JOptionPane.showMessageDialog(this, "Sedang ada pasien berlangsung");
                 } else {
                     client.send(nextAntrianMessage);
