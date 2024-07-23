@@ -1680,7 +1680,7 @@ public class DocData extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (!model.isEmpty()) {
             String nextAntrianMessage = "NEXT_ANTRIAN:" + model.getElementAt(0);
-            if (status.getText().equals("Not Ready yet") || status.getText().toLowerCase().equals("checking")) {
+            if (status.getText().equals("Not Ready yet")) {
                 JOptionPane.showMessageDialog(this, "Dokter Belum Siap");
             } else {
                 if (btnPeriksa.isEnabled() && status.getText().equals("Checking")) {
@@ -1693,7 +1693,6 @@ public class DocData extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Antrian kosong");
         }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
